@@ -30,6 +30,13 @@ export const THEME_PRESETS = [
     swatches: ['oklch(0.13 0 0)', 'oklch(0.95 0 0)'],
   },
   {
+    // Inspired by Apple's website design: off-white canvas, near-black text,
+    // clean minimalist surfaces with refined system typography.
+    value: 'apple',
+    name: 'Apple',
+    swatches: ['oklch(0.985 0 0)', 'oklch(0.13 0 0)'],
+  },
+  {
     // Inspired by Anthropic's official brand language: warm cream canvas
     // (#faf9f5) paired with clay/coral (#d97757) as the single accent.
     // Swatches preview the canvas → accent gradient that defines the system.

@@ -115,36 +115,39 @@ export function PerformanceHealthPanel() {
       </div>
 
       <div className='space-y-3 p-4 sm:p-5'>
-        <div className='grid grid-cols-3 gap-2'>
-          <MetricCell
-            icon={HeartPulse}
-            label={t('Success rate')}
-            value={formatUptimePct(summary.successRate)}
-            loading={loading}
-            valueClassName={rateTextClass(summary.successRate)}
-          />
-          <MetricCell
-            icon={Timer}
-            label={t('Average latency')}
-            value={formatLatency(summary.avgLatencyMs)}
-            loading={loading}
-          />
-          <MetricCell
-            icon={Gauge}
-            label={t('Throughput')}
-            value={formatThroughput(summary.avgTps)}
-            loading={loading}
-          />
-        </div>
-
         {loading ? (
-          <div className='space-y-1'>
-            {Array.from({ length: 3 }).map((_, i) => (
-              <Skeleton key={i} className='h-5 w-full rounded' />
-            ))}
-          </div>
-        ) : (
-          hasData && (
+          <>
+            <div className='grid grid-cols-3 gap-2'>
+              <MetricCell icon={HeartPulse} label={t('Success rate')} value='' loading />
+              <MetricCell icon={Timer} label={t('Average latency')} value='' loading />
+              <MetricCell icon={Gauge} label={t('Throughput')} value='' loading />
+            </div>
+            <div className='space-y-1'>
+              {Array.from({ length: 3 }).map((_, i) => (
+                <Skeleton key={i} className='h-5 w-full rounded' />
+              ))}
+            </div>
+          </>
+        ) : hasData ? (
+          <>
+            <div className='grid grid-cols-3 gap-2'>
+              <MetricCell
+                icon={HeartPulse}
+                label={t('Success rate')}
+                value={formatUptimePct(summary.successRate)}
+                valueClassName={rateTextClass(summary.successRate)}
+              />
+              <MetricCell
+                icon={Timer}
+                label={t('Average latency')}
+                value={formatLatency(summary.avgLatencyMs)}
+              />
+              <MetricCell
+                icon={Gauge}
+                label={t('Throughput')}
+                value={formatThroughput(summary.avgTps)}
+              />
+            </div>
             <div>
               <span className='text-muted-foreground mb-1 block text-[11px] font-medium'>
                 {t('Top models by traffic')}
@@ -179,7 +182,11 @@ export function PerformanceHealthPanel() {
                 ))}
               </div>
             </div>
-          )
+          </>
+        ) : (
+          <div className='text-muted-foreground py-4 text-center text-xs'>
+            {t('No performance data available for the last 24 hours')}
+          </div>
         )}
       </div>
     </section>
