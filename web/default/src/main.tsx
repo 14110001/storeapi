@@ -124,28 +124,19 @@ const rootElement = document.getElementById('root')!
       ) as HTMLMetaElement | null
       if (metaTitle) metaTitle.setAttribute('content', name)
     }
-    // Cache-first
+    apply('Store API')
+    // Still try to refresh favicon from backend
     try {
       const saved = localStorage.getItem('status')
       if (saved) {
         const s = JSON.parse(saved)
-        if (s?.system_name) apply(s.system_name)
         if (s?.logo) applyFaviconToDom(s.logo)
       }
     } catch {
       /* empty */
     }
-    // Background refresh
     getStatus()
       .then((s) => {
-        if (s?.system_name) {
-          apply(s.system_name as string)
-          try {
-            localStorage.setItem('status', JSON.stringify(s))
-          } catch {
-            /* empty */
-          }
-        }
         if (s?.logo) applyFaviconToDom(s.logo as string)
       })
       .catch(() => {
